@@ -3,7 +3,7 @@ module.exports = {
     manifestOptions: {
       background_color: 'hotpink'
     },
-    name: 'My labb project',
+    name: 'My vue project',
     themeColor: 'steelblue',
     workboxOptions: {
       runtimeCaching: [

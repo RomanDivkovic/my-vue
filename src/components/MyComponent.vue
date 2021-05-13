@@ -1,7 +1,9 @@
 <template>
     <div>
-      <h1>{{ getMsg }}</h1>
-        <p>that has string interpulation and will use other functions we have learned during this course</p>
+      <h2>{{ getMsg }}</h2>
+        <p>I'm 28 years old and this is a school project</p>
+        <h3> {{ info }}</h3>
+
   </div>
 </template>
 
@@ -9,7 +11,10 @@
 export default {
   name: 'myComp',
   props: {
-    getMsg: String
+    getMsg: String,
+    info: String,
+    age: Number
+
   }
 }
 </script>

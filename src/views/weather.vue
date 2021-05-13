@@ -1,32 +1,46 @@
 <template>
-    <div id="this-page">
+    <div id='this-page'>
       <section>
       <div>
           <h1></h1>
             <input 
-            type="text" 
-            class="search" 
-            v-model="city"
-            @keypress="getWeather"
-            placeholder="Search for a city"
+            type='text' 
+            class='search' 
+            v-model=city
+            @keypress=getWeather
+            placeholder='Search for a city'
             />
       </div>
+      <b-button value="city" @:click="getCity" variant="primary">Klicka här</b-button>
 
       <div v-if="weather.main">
-          <p class="get-city">{{ weather.name }}, {{ weather.sys.country }}</p>
-          <p class="Date"> {{ dateBuilder() }}</p>
+          <p class='get-city'>{{ weather.name }}, {{ weather.sys.country }}</p>
+          <p class='Date'> {{ dateBuilder() }}</p>
 
-          <p id="temperature">{{ Math.round(weather.main.temp) }}°c</p>
-          <p id="weather">{{ weather.weather[0].main }}</p>
+          <p id='temperature'>{{ Math.round(weather.main.temp) }}°c</p>
+          <p id='weather'>{{ weather.weather[0].main }}</p>
           <p class="hi-lo"> {{ Math.round(weather.main.temp_min) }}°c / {{ Math.round(weather.main.temp_max)}}°c </p>
       </div>
-       <p v-else>You need to search you dummy</p>
+       <div v-else>
+         <p id='p'>You need to search you dummy</p>
+       </div>
       </section>
     </div>
 </template>
 
 <script>
+import axios from "axios"
+
 export default {
+  created() {
+            axios.get(`${this.url}weather?q=gothenburg&units=metric&APPID=${this.key}`)
+            .then(response => {
+        // JSON responses are automatically parsed.
+             this.weather = response.data
+        }).catch(e => {
+            this.errors.push(e)
+        })
+   },
     data () {
     return {
       key: '6e14ee8cdb51cf3777c97628f3ae1998',
@@ -37,13 +51,22 @@ export default {
   },
   methods: {
     getWeather (enter) {
-      if (enter.key === "Enter") {
-        fetch(`${this.url}weather?q=${this.city}&units=metric&APPID=${this.key}`)
-        .then((response) => response.json())
-        .then((result) => {
-          this.weather = result
+      if (enter.key === 'Enter') {
+          axios.get(`${this.url}weather?q=${this.city}&units=metric&APPID=${this.key}`)
+            .then(response => {
+             this.weather = response.data
+        }).catch(e => {
+            this.errors.push(e)
         })
-      }
+        }
+    },
+    getCity() {
+          axios.get(`${this.url}weather?q=${this.city}&units=metric&APPID=${this.key}`)
+            .then(response => {
+             this.weather = response.data
+        }).catch(e => {
+            this.errors.push(e)
+        })
     },
     dateBuilder() {
         let d = new Date()
@@ -89,7 +112,7 @@ export default {
 #this-page {
   background-image: url('../assets/photo.jpg');
   background-size: cover;
-  background-position: bottom;
+  background-position: top;
 }
 
 section {
@@ -122,17 +145,17 @@ section {
 }
 #weather {
     color: whitesmoke;
-    font-size: 20px;
+    font-size: 25px;
     text-shadow: 1px 1px black;
 }
 .hi-lo {
     color: whitesmoke;
-    font-size: 15px;
+    font-size: 25px;
     text-shadow: 1px 1px black;
 }
-p {
-    color: green;
-    font-size: 25px;
+#p {
+  color: darkgrey;
+  font-size: 25px;
 }
 
 

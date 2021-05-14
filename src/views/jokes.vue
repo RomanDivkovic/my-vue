@@ -70,4 +70,7 @@ export default {
     #app {
        background-color: rgb(79, 101, 121);
     }
+    #button {
+        color: whitesmoke;
+    }
 </style>

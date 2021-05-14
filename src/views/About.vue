@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     n() {
-      return this.answer
+      return this.value
     }
   },
   methods: {

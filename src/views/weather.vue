@@ -2,17 +2,14 @@
     <div id='this-page'>
       <section>
       <div>
-          <h1></h1>
             <input 
             type='text' 
             class='search' 
             v-model=city
             @keypress=getWeather
-            placeholder='Search for a city'
+            placeholder='Search for a city and press enter'
             />
       </div>
-      <b-button value="city" @:click="getCity" variant="primary">Klicka här</b-button>
-
       <div v-if="weather.main">
           <p class='get-city'>{{ weather.name }}, {{ weather.sys.country }}</p>
           <p class='Date'> {{ dateBuilder() }}</p>
@@ -22,7 +19,7 @@
           <p class="hi-lo"> {{ Math.round(weather.main.temp_min) }}°c / {{ Math.round(weather.main.temp_max)}}°c </p>
       </div>
        <div v-else>
-         <p id='p'>You need to search you dummy</p>
+         <p id='p'>Cant get the weather right now</p>
        </div>
       </section>
     </div>
@@ -35,7 +32,6 @@ export default {
   created() {
             axios.get(`${this.url}weather?q=gothenburg&units=metric&APPID=${this.key}`)
             .then(response => {
-        // JSON responses are automatically parsed.
              this.weather = response.data
         }).catch(e => {
             this.errors.push(e)
@@ -59,14 +55,6 @@ export default {
             this.errors.push(e)
         })
         }
-    },
-    getCity() {
-          axios.get(`${this.url}weather?q=${this.city}&units=metric&APPID=${this.key}`)
-            .then(response => {
-             this.weather = response.data
-        }).catch(e => {
-            this.errors.push(e)
-        })
     },
     dateBuilder() {
         let d = new Date()
@@ -157,6 +145,5 @@ section {
   color: darkgrey;
   font-size: 25px;
 }
-
 
 </style>
